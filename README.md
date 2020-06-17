@@ -25,6 +25,12 @@ terraform apply
 terraform destroy
 ```
 
+```
+AWS_REGION=us-east-2
+
+aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value|[0],State.Name,PrivateIpAddress,PublicIpAddress,PublicDnsName]' --output text | column -t | grep running
+```
+
 ### Note
 
 ebs volume somehow is not being deleted, even though delete_on_termination is given. Yet to identify the solution.

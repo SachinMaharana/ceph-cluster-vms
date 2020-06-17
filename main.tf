@@ -2,7 +2,6 @@ data "http" "workstation-external-ip" {
   url = "http://ipv4.icanhazip.com"
 }
 
-
 locals {
   workstation-external-cidr = "${chomp(data.http.workstation-external-ip.body)}/32"
 }
@@ -30,7 +29,6 @@ resource "aws_internet_gateway" "igw" {
     Name = "ceph"
   }
 }
-
 
 
 resource "aws_route_table" "rt" {
@@ -97,7 +95,7 @@ resource "aws_security_group_rule" "allow_http_radosgw" {
 }
 
 
-resource "aws_security_group_rule" "allow_http_grafan" {
+resource "aws_security_group_rule" "allow_http_grafana" {
   type              = "ingress"
   from_port         = 3000
   to_port           = 3000
@@ -133,9 +131,9 @@ resource "aws_key_pair" "ssh" {
 
 
 resource "aws_instance" "mon" {
-  count                       = 3
-  ami                         = "ami-0f2b4fc905b0bd1f1"
-  instance_type               = "t2.medium"
+  count                       = var.mon_count
+  ami                         = var.centos
+  instance_type               = var.mon_instance_type
   vpc_security_group_ids      = [aws_security_group.ceph.id]
   key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
   subnet_id                   = aws_subnet.subnet.id
@@ -145,9 +143,9 @@ resource "aws_instance" "mon" {
   }
 }
 resource "aws_instance" "osd" {
-  count                       = 3
-  ami                         = "ami-0f2b4fc905b0bd1f1"
-  instance_type               = "t2.medium"
+  count                       = var.osd_count
+  ami                         = var.centos
+  instance_type               = var.osd_instance_type
   vpc_security_group_ids      = [aws_security_group.ceph.id]
   key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
   subnet_id                   = aws_subnet.subnet.id
@@ -156,22 +154,16 @@ resource "aws_instance" "osd" {
     Name = "osd-${count.index}"
   }
   ebs_block_device {
-    device_name           = "/dev/xvdb"
+    device_name           = var.device_name
     delete_on_termination = true
-    volume_size           = 30
+    volume_size           = var.volume_size
     volume_type           = "gp2"
   }
 
 }
 
-# output "public_ip_mon" {
-#   value       = aws_instance.mon[count.index].public_ip
-#   description = "Public IP"
-# }
-
-# output "public_ip_osd" {
-#   value       = aws_instance.osd[count.index].public_ip
-#   description = "Public IP"
-# }
 
 
+# aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value|[0],State.Name,PublicDnsName]' --output text | column -t | grep running
+
+# aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value|[0],State.Name,PrivateIpAddress,PublicIpAddress,PublicDnsName,BlockDeviceMappings[*].DeviceName]' --output text | column -t | grep running

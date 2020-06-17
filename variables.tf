@@ -4,12 +4,39 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+
 variable "owner" {
   default = "sachinm"
 }
 
+variable "centos" {
+  default = "ami-0f2b4fc905b0bd1f1"
+}
+
+variable "volume_size" {
+  default = 30
+}
+variable "device_name" {
+  default = "/dev/xvdb"
+}
+
+variable "mon_instance_type" {
+  default = "t2.medium"
+}
+
+variable "mon_count" {
+  default = 3
+}
+variable "osd_count" {
+  default = 3
+}
+
+variable "osd_instance_type" {
+  default = "t2.medium"
+}
+
 variable "project" {
-  default = "ssh"
+  default = "ceph"
 }
 
 variable "vpc_cidr" {
@@ -33,19 +60,11 @@ variable "all_cidr" {
   default = "0.0.0.0/0"
 }
 
-
-variable "ssh_port" {
-  type        = number
-  default     = 22
-  description = "SSH Port"
-}
-
 variable "aws_key_pair_name" {
   type        = string
   default     = null
   description = "AWS Key Pair Name"
 }
-
 
 
 variable "ssh_public_key_path" {
