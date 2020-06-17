@@ -161,9 +161,3 @@ resource "aws_instance" "osd" {
   }
 
 }
-
-
-
-# aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value|[0],State.Name,PublicDnsName]' --output text | column -t | grep running
-
-# aws ec2 describe-instances --query 'Reservations[*].Instances[*].[Tags[?Key==`Name`].Value|[0],State.Name,PrivateIpAddress,PublicIpAddress,PublicDnsName,BlockDeviceMappings[*].DeviceName]' --output text | column -t | grep running
