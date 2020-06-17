@@ -142,6 +142,18 @@ resource "aws_instance" "mon" {
     Name = "mon-${count.index}"
   }
 }
+resource "aws_instance" "client" {
+  count                       = 1
+  ami                         = var.centos
+  instance_type               = var.mon_instance_type
+  vpc_security_group_ids      = [aws_security_group.ceph.id]
+  key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
+  subnet_id                   = aws_subnet.subnet.id
+  associate_public_ip_address = true
+  tags = {
+    Name = "client-${count.index}"
+  }
+}
 resource "aws_instance" "osd" {
   count                       = var.osd_count
   ami                         = var.centos
