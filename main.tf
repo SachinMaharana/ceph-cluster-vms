@@ -65,7 +65,7 @@ resource "aws_security_group_rule" "allow_ssh" {
   to_port           = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.ceph.id
-  cidr_blocks       = [var.all_cidr]
+  cidr_blocks       = [local.workstation-external-cidr]
 }
 
 resource "aws_security_group_rule" "allow_icmp" {
@@ -142,18 +142,7 @@ resource "aws_instance" "mon" {
     Name = "mon-${count.index}"
   }
 }
-resource "aws_instance" "client" {
-  count                       = 1
-  ami                         = var.centos
-  instance_type               = var.mon_instance_type
-  vpc_security_group_ids      = [aws_security_group.ceph.id]
-  key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
-  subnet_id                   = aws_subnet.subnet.id
-  associate_public_ip_address = true
-  tags = {
-    Name = "client-${count.index}"
-  }
-}
+
 resource "aws_instance" "osd" {
   count                       = var.osd_count
   ami                         = var.centos
@@ -172,4 +161,17 @@ resource "aws_instance" "osd" {
     volume_type           = "gp2"
   }
 
+}
+
+resource "aws_instance" "client" {
+  count                       = 1
+  ami                         = var.centos
+  instance_type               = var.mon_instance_type
+  vpc_security_group_ids      = [aws_security_group.ceph.id]
+  key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
+  subnet_id                   = aws_subnet.subnet.id
+  associate_public_ip_address = true
+  tags = {
+    Name = "client-${count.index}"
+  }
 }
