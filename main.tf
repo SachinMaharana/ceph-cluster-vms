@@ -6,6 +6,7 @@ locals {
   workstation-external-cidr = "${chomp(data.http.workstation-external-ip.body)}/32"
 }
 
+
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
@@ -164,9 +165,9 @@ resource "aws_instance" "osd" {
 }
 
 resource "aws_instance" "client" {
-  count                       = 1
+  count                       = var.client_count
   ami                         = var.centos
-  instance_type               = var.mon_instance_type
+  instance_type               = var.client_instance_type
   vpc_security_group_ids      = [aws_security_group.ceph.id]
   key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
   subnet_id                   = aws_subnet.subnet.id

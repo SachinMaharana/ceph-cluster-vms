@@ -20,15 +20,25 @@ variable "device_name" {
   default = "/dev/xvdb"
 }
 
-variable "mon_instance_type" {
-  default = "t2.medium"
-}
 
 variable "mon_count" {
   default = 3
 }
+
 variable "osd_count" {
   default = 3
+}
+
+variable "client_count" {
+  default = 1
+}
+
+variable "mon_instance_type" {
+  default = "t2.micro"
+}
+
+variable "client_instance_type" {
+  default = "t2.micro"
 }
 
 variable "osd_instance_type" {
