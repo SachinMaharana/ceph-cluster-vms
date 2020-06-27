@@ -1,22 +1,22 @@
-[all]
+[all:vars]
 ansible_user=centos
 ansible_ssh_private_key_file= ~/.ssh/id_rsa
 ansible_python_interpreter=/usr/bin/python
 
 [mons]
-13.59.33.181
-18.188.6.44
-18.220.178.90
+3.14.128.23 monitor_interface=eth0
+52.15.136.59 monitor_interface=eth0
+18.191.14.2 monitor_interface=eth0
 
 
 [osds]
-3.15.172.140
-3.22.171.70
-18.223.2.118
+3.128.171.28 monitor_interface=eth0
+52.15.113.206 monitor_interface=eth0
+13.58.182.239 monitor_interface=eth0
 
 [mgrs]
-13.59.33.181
-18.188.6.44
+3.14.128.23
+52.15.136.59
 
 [grafana-server]
-13.59.33.181
+3.14.128.23

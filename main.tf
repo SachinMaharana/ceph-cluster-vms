@@ -188,10 +188,10 @@ data "template_file" "inventory" {
   template = file("${path.module}/templates/inventory.tpl")
 
   vars = {
-    list_mons    = join("\n", aws_instance.mon.*.public_ip)
-    list_osds    = join("\n", aws_instance.osd.*.public_ip)
+    list_mons    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.mon.*.public_ip))
+    list_osds    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.osd.*.public_ip))
     list_grafana = element(aws_instance.mon.*.public_ip, 0)
-    list_mgrs    = join("\n", [element(aws_instance.mon.*.public_ip, 0), element(aws_instance.mon.*.public_ip, 1)])
+    list_mgrs    = join("\n", slice(aws_instance.mon.*.public_ip, 0, 2))
   }
 }
 
