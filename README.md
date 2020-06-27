@@ -2,7 +2,9 @@
 
 A configurable terraform files to create a cluster of mons and osds in AWS to be used while exploring ceph installation.
 
-Should not be used for production as all VM's are in public subnet and have an associated public ip address.
+A inventory file is also generated automatically to be used directy with https://github.com/SachinMaharana/ceph-ansible-custom
+
+NOTE: Should not be used for production as all VM's are in public subnet and have an associated public ip address.
 
 ## Useful Commands
 
