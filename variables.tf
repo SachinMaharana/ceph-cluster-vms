@@ -80,3 +80,9 @@ variable "aws_key_pair_name" {
 variable "ssh_public_key_path" {
   default = "~/.ssh/id_rsa.pub"
 }
+
+variable "inventory_file" {
+  default = "./inventory"
+}
+
+

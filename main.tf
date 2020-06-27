@@ -156,7 +156,13 @@ resource "aws_instance" "osd" {
     Name = "osd-${count.index}"
   }
   ebs_block_device {
-    device_name           = var.device_name
+    device_name           = "/dev/xvdb"
+    delete_on_termination = true
+    volume_size           = var.volume_size
+    volume_type           = "gp2"
+  }
+  ebs_block_device {
+    device_name           = "/dev/xvdc"
     delete_on_termination = true
     volume_size           = var.volume_size
     volume_type           = "gp2"
@@ -174,5 +180,27 @@ resource "aws_instance" "client" {
   associate_public_ip_address = true
   tags = {
     Name = "client-${count.index}"
+  }
+}
+
+
+data "template_file" "inventory" {
+  template = file("${path.module}/templates/inventory.tpl")
+
+  vars = {
+    list_mons    = join("\n", aws_instance.mon.*.public_ip)
+    list_osds    = join("\n", aws_instance.osd.*.public_ip)
+    list_grafana = element(aws_instance.mon.*.public_ip, 0)
+    list_mgrs    = join("\n", [element(aws_instance.mon.*.public_ip, 0), element(aws_instance.mon.*.public_ip, 1)])
+  }
+}
+
+resource "null_resource" "inventories" {
+  provisioner "local-exec" {
+    command = "echo '${data.template_file.inventory.rendered}' > ${var.inventory_file}"
+  }
+
+  triggers = {
+    template = data.template_file.inventory.rendered
   }
 }
