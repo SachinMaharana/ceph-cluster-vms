@@ -161,13 +161,19 @@ resource "aws_instance" "osd" {
     volume_size           = var.volume_size
     volume_type           = "gp2"
   }
-  ebs_block_device {
-    device_name           = "/dev/xvdc"
-    delete_on_termination = true
-    volume_size           = var.volume_size
-    volume_type           = "gp2"
-  }
+}
 
+resource "aws_instance" "k8s" {
+  count                       = var.create_k8s == null ? 0 : 3
+  ami                         = var.centos
+  instance_type               = var.osd_instance_type
+  vpc_security_group_ids      = [aws_security_group.ceph.id]
+  key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
+  subnet_id                   = aws_subnet.subnet.id
+  associate_public_ip_address = true
+  tags = {
+    Name = "k8-${count.index}"
+  }
 }
 
 resource "aws_instance" "client" {
@@ -183,24 +189,54 @@ resource "aws_instance" "client" {
   }
 }
 
+# ----Old Verison----
 
-data "template_file" "inventory" {
-  template = file("${path.module}/templates/inventory.tpl")
+# data "template_file" "inventory" {
+#   template = file("${path.module}/templates/inventory.tpl")
 
-  vars = {
-    list_mons    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.mon.*.public_ip))
-    list_osds    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.osd.*.public_ip))
-    list_grafana = element(aws_instance.mon.*.public_ip, 0)
-    list_mgrs    = join("\n", slice(aws_instance.mon.*.public_ip, 0, 2))
-  }
+#   vars = {
+#     list_mons    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.mon.*.public_ip))
+#     list_osds    = join("\n", formatlist("%s monitor_interface=eth0", aws_instance.osd.*.public_ip))
+#     list_grafana = aws_instance.mon[0].public_ip
+#     list_mgrs    = join("\n", slice(aws_instance.mon.*.public_ip, 0, 2))
+#   }
+# }
+
+
+# resource "null_resource" "inventories" {
+#   provisioner "local-exec" {
+#     command = "echo '${data.template_file.inventory.rendered}' > ${var.inventory_file}"
+#   }
+
+#   triggers = {
+#     template = data.template_file.inventory.rendered
+#   }
+# }
+
+# ----Old Version----
+
+
+
+resource "local_file" "inventory" {
+  content = templatefile("${path.module}/templates/inventory.tpl", {
+    list_mons = aws_instance.mon.*.public_ip,
+    list_osds = aws_instance.osd.*.public_ip,
+    # list_grafana = aws_instance.mon[0].public_ip
+    # list_mgrs    = join("\n", slice(aws_instance.mon.*.public_ip, 0, 2))
+
+  })
+  filename = var.inventory_file
 }
 
-resource "null_resource" "inventories" {
-  provisioner "local-exec" {
-    command = "echo '${data.template_file.inventory.rendered}' > ${var.inventory_file}"
-  }
-
-  triggers = {
-    template = data.template_file.inventory.rendered
-  }
+resource "local_file" "kube_inventory" {
+  count = var.create_k8s == null ? 0 : 1
+  content = templatefile("${path.module}/templates/kube.tpl", {
+    list_master = slice(aws_instance.k8s.*.public_ip, 0, 1),
+    list_worker = slice(aws_instance.k8s.*.public_ip, 1, 3)
+  })
+  filename = var.kube_file
 }
+
+
+
+

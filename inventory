@@ -4,19 +4,11 @@ ansible_ssh_private_key_file= ~/.ssh/id_rsa
 ansible_python_interpreter=/usr/bin/python
 
 [mons]
-3.14.128.23 monitor_interface=eth0
-52.15.136.59 monitor_interface=eth0
-18.191.14.2 monitor_interface=eth0
-
+18.222.141.149 monitor_interface=eth0
+18.216.50.189 monitor_interface=eth0
+3.19.55.251 monitor_interface=eth0
 
 [osds]
-3.128.171.28 monitor_interface=eth0
-52.15.113.206 monitor_interface=eth0
-13.58.182.239 monitor_interface=eth0
-
-[mgrs]
-3.14.128.23
-52.15.136.59
-
-[grafana-server]
-3.14.128.23
+18.188.162.99 monitor_interface=eth0
+18.191.127.18 monitor_interface=eth0
+3.15.20.134 monitor_interface=eth0

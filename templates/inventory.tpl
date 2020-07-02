@@ -4,14 +4,11 @@ ansible_ssh_private_key_file= ~/.ssh/id_rsa
 ansible_python_interpreter=/usr/bin/python
 
 [mons]
-${list_mons}
-
+%{for ip in list_mons ~}
+${ip} monitor_interface=eth0
+%{ endfor ~}
 
 [osds]
-${list_osds}
-
-[mgrs]
-${list_mgrs}
-
-[grafana-server]
-${list_grafana}
+%{for ip in list_osds ~}
+${ip} monitor_interface=eth0
+%{ endfor ~}

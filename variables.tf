@@ -30,7 +30,7 @@ variable "osd_count" {
 }
 
 variable "client_count" {
-  default = 1
+  default = 0
 }
 
 variable "mon_instance_type" {
@@ -83,6 +83,17 @@ variable "ssh_public_key_path" {
 
 variable "inventory_file" {
   default = "./inventory"
+}
+
+variable "kube_file" {
+  default = "./kube"
+}
+
+// optional
+variable "create_k8s" {
+  type        = string
+  default     = null
+  description = "create k8s vms, if enabled"
 }
 
 
