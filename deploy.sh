@@ -19,14 +19,12 @@ cp kube "$kube_dir"
 
 pushd $dir 
 
-ansible all -i inventory --become -m yum -a "name=epel-release state=present update_cache=true"
 if [ $? -ne 0 ]
 then
   echo "Error in ansible epel." >&2
   exit 1
 fi
 
-ansible all -i inventory --become -m yum -a "name=mosh state=present"
 
 if [ $? -ne 0 ]
 then
@@ -43,14 +41,12 @@ fi
 popd
 
 pushd $playbook 
-ansible all -i inventories/development/kube --become -m yum -a "name=epel-release state=present update_cache=true"
 if [ $? -ne 0 ]
 then
   echo "Error in ansible epel." >&2
   exit 1
 fi
 
-ansible all -i inventories/development/kube --become -m yum -a "name=mosh state=present"
 if [ $? -ne 0 ]
 then
   echo "Error in ansible mosh." >&2
