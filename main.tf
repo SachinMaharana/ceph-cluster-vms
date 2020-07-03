@@ -1,5 +1,6 @@
 data "http" "workstation-external-ip" {
-  url = "http://ipv4.icanhazip.com"
+  # url = "http://ipv4.icanhazip.com"
+  url = "https://ipv4.icanhazip.com/"
 }
 
 locals {
@@ -142,6 +143,9 @@ resource "aws_instance" "mon" {
   tags = {
     Name = "mon-${count.index}"
   }
+  root_block_device {
+    delete_on_termination = true
+  }
 }
 
 resource "aws_instance" "osd" {
@@ -154,6 +158,9 @@ resource "aws_instance" "osd" {
   associate_public_ip_address = true
   tags = {
     Name = "osd-${count.index}"
+  }
+  root_block_device {
+    delete_on_termination = true
   }
   ebs_block_device {
     device_name           = "/dev/xvdb"
@@ -174,6 +181,9 @@ resource "aws_instance" "k8s" {
   tags = {
     Name = "k8-${count.index}"
   }
+  root_block_device {
+    delete_on_termination = true
+  }
 }
 
 resource "aws_instance" "client" {
@@ -186,6 +196,9 @@ resource "aws_instance" "client" {
   associate_public_ip_address = true
   tags = {
     Name = "client-${count.index}"
+  }
+  root_block_device {
+    delete_on_termination = true
   }
 }
 
@@ -219,9 +232,9 @@ resource "aws_instance" "client" {
 
 resource "local_file" "inventory" {
   content = templatefile("${path.module}/templates/inventory.tpl", {
-    list_mons = aws_instance.mon.*.public_ip,
-    list_osds = aws_instance.osd.*.public_ip,
-    # list_grafana = aws_instance.mon[0].public_ip
+    list_mons    = aws_instance.mon.*.public_ip,
+    list_osds    = aws_instance.osd.*.public_ip,
+    list_grafana = aws_instance.mon[0].public_ip
     # list_mgrs    = join("\n", slice(aws_instance.mon.*.public_ip, 0, 2))
 
   })

@@ -12,3 +12,6 @@ ${ip} monitor_interface=eth0
 %{for ip in list_osds ~}
 ${ip} monitor_interface=eth0
 %{ endfor ~}
+
+[grafana-server]
+${list_grafana}

@@ -92,7 +92,7 @@ variable "kube_file" {
 // optional
 variable "create_k8s" {
   type        = string
-  default     = null
+  default     = "null"
   description = "create k8s vms, if enabled"
 }
 
