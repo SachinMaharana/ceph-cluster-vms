@@ -61,11 +61,27 @@ resource "aws_security_group" "ceph" {
   }
 }
 
-resource "aws_security_group_rule" "allow_ssh" {
+resource "aws_security_group_rule" "allow_mosh_1" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
+  security_group_id = aws_security_group.ceph.id
+  cidr_blocks       = [local.workstation-external-cidr]
+}
+resource "aws_security_group_rule" "allow_mosh_2" {
+  type              = "ingress"
+  from_port         = 60001
+  to_port           = 60001
+  protocol          = "udp"
+  security_group_id = aws_security_group.ceph.id
+  cidr_blocks       = [local.workstation-external-cidr]
+}
+resource "aws_security_group_rule" "allow_ssh" {
+  type              = "ingress"
+  from_port         = 60000
+  to_port           = 60000
+  protocol          = "udp"
   security_group_id = aws_security_group.ceph.id
   cidr_blocks       = [local.workstation-external-cidr]
 }
@@ -166,14 +182,14 @@ resource "aws_instance" "osd" {
     device_name           = "/dev/xvdb"
     delete_on_termination = true
     volume_size           = var.volume_size
-    volume_type           = "gp2"
+    volume_type           = "standard"
   }
 }
 
 resource "aws_instance" "k8s" {
   count                       = var.create_k8s == null ? 0 : 3
   ami                         = var.centos
-  instance_type               = var.osd_instance_type
+  instance_type               = var.k8s_instance_type
   vpc_security_group_ids      = [aws_security_group.ceph.id]
   key_name                    = var.aws_key_pair_name == null ? aws_key_pair.ssh.0.key_name : var.aws_key_pair_name
   subnet_id                   = aws_subnet.subnet.id

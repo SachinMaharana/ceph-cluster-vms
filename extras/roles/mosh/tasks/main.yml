@@ -1,0 +1,10 @@
+---
+# tasks file for mosh
+
+- name: Install Mosh
+  yum:
+    state: present
+    enablerepo: epel
+    name:
+      - mosh
+      - git

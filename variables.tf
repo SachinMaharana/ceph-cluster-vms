@@ -1,7 +1,7 @@
 variable "aws_region" {
   type        = string
   description = "AWS Region this resource will be deployed"
-  default     = "us-east-2"
+  default     = "us-east-1"
 }
 
 
@@ -10,7 +10,8 @@ variable "owner" {
 }
 
 variable "centos" {
-  default = "ami-0f2b4fc905b0bd1f1"
+  # default = "ami-0f2b4fc905b0bd1f1"
+  default = "ami-06cf02a98a61f9f5e"
 }
 
 variable "volume_size" {
@@ -28,20 +29,26 @@ variable "mon_count" {
 variable "osd_count" {
   default = 3
 }
+# variable "osd_count" {
+#   default = 3
+# }
 
 variable "client_count" {
   default = 0
 }
 
 variable "mon_instance_type" {
-  default = "t2.micro"
+  default = "t2.medium"
 }
 
 variable "client_instance_type" {
-  default = "t2.micro"
+  default = "t2.medium"
 }
 
 variable "osd_instance_type" {
+  default = "t2.medium"
+}
+variable "k8s_instance_type" {
   default = "t2.medium"
 }
 

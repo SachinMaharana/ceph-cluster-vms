@@ -2,6 +2,6 @@
 *.tfstate
 *.tfstate.backup
 .terraform.tfstate.lock.info
-.envrc
+.envrc*
 inventory
 kube

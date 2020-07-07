@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: false
+  become: True
+
+  pre_tasks:
+    - name: Install EPEL Repo
+      yum:
+        name: epel-release
+        state: present
+
+  tasks:
+    - import_role:
+        name: mosh
+    - import_role:
+        name: extras
+      tags:
+        - extras
