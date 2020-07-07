@@ -22,13 +22,13 @@
   delegate_to: "{{ groups.mons[0] }}"
   run_once: true
 
-- name: "show ceph status for cluster {{ cluster }}"
+- name: "show ceph status for cluster ceph"
   debug:
     msg: "{{ ceph_status.stdout_lines }}"
   delegate_to: "{{ groups.mons[0] }}"
   run_once: true
 
-- name: write
+- name: write to master node
   copy:
     content: "{{ ceph_status.stdout_lines }}"
     dest: ~/ceph
