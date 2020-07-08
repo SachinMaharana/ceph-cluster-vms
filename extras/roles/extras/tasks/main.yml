@@ -8,30 +8,38 @@
     dest: ~/ceph-csi
   when: inventory_hostname == "master-0"
 
-# - name: Check Ceph
-#   debug:
-#     msg: "{{ ceph_status.stdout_lines }}"
-#   delegate_to: "{{ groups[mons][0] }}"
-#   run_once: true
-#   when: not ceph_status.failed
-
 - name: get ceph status from the first monitor
-  command: ceph mon dump
+  command: "{{ item }}"
   register: ceph_status
   changed_when: false
   delegate_to: "{{ groups.mons[0] }}"
   run_once: true
+  with_items:
+    - ceph mon dump
+    - ceph osd pool create kube 64 64
+    - ceph osd pool get kube all
+    - rbd pool init kube
+    - ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube'
+    - ceph auth list
 
 - name: "show ceph status for cluster ceph"
   debug:
-    msg: "{{ ceph_status.stdout_lines }}"
+    msg: "{{ ceph_status.results[0].stdout_lines }}"
   delegate_to: "{{ groups.mons[0] }}"
   run_once: true
 
-- name: write to master node
+- name: write status to master node
   copy:
-    content: "{{ ceph_status.stdout_lines }}"
+    content: "{{ ceph_status.results[0].stdout_lines }}"
     dest: ~/ceph
+  become: False
+  delegate_to: "{{ groups.masters[0] }}"
+  run_once: true
+
+- name: write auth to master node
+  copy:
+    content: "{{ ceph_status.results[5].stdout_lines }}"
+    dest: ~/ceph_auth
   become: False
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
@@ -44,7 +52,7 @@
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
 
-- name: Insert a line at the end of a file.
+- name: Insert kubectl completions
   lineinfile:
     dest: ~/.bashrc
     line: "[ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases"

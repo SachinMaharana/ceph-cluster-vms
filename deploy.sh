@@ -6,7 +6,7 @@ kube_playbook=~/blackhole/kube-vms-playbook/playbooks
 extras=./extras
 
 
-terraform apply --auto-approve
+#terraform apply --auto-approve
 
 
 if [ $? -ne 0 ]
@@ -19,20 +19,8 @@ cp inventory "$dir"
 cp kube "$kube_dir"
   
 
-# if [ $? -ne 0 ]
-# then
-#   echo "Error in ansible epel." >&2
-#   exit 1
-# fi
-
-# if [ $? -ne 0 ]
-# then
-#   echo "Error in ansible mosh" >&2
-#   exit 1
-# fi
-
 pushd $dir 
-ansible-playbook -i inventory site.yml
+#ansible-playbook -i inventory site.yml
 if [ $? -ne 0 ]
 then
   echo "Error in ansible playbook." >&2
@@ -41,17 +29,6 @@ fi
 popd
 
 pushd $kube_playbook 
-# if [ $? -ne 0 ]
-# then
-#   echo "Error in ansible epel." >&2
-#   exit 1
-# fi
-
-# if [ $? -ne 0 ]
-# then
-#   echo "Error in ansible mosh." >&2
-#   exit 1
-# fi
 
 ansible-playbook -i inventories/development/kube site.yml
 
