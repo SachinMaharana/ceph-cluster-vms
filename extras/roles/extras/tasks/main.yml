@@ -35,3 +35,19 @@
   become: False
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
+
+- name: get kubectl completions
+  get_url:
+    url: https://raw.githubusercontent.com/ahmetb/kubectl-alias/master/.kubectl_aliases
+    dest: ~/.kubectl_aliases
+  become: False
+  delegate_to: "{{ groups.masters[0] }}"
+  run_once: true
+
+- name: Insert a line at the end of a file.
+  lineinfile:
+    dest: ~/.bashrc
+    line: "[ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases"
+  become: False
+  delegate_to: "{{ groups.masters[0] }}"
+  run_once: true

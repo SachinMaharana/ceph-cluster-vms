@@ -2,7 +2,9 @@
 
 dir=../ceph-ansible-custom/ceph-ansible 
 kube_dir=~/blackhole/kube-vms-playbook/playbooks/inventories/development/
-playbook=~/blackhole/kube-vms-playbook/playbooks
+kube_playbook=~/blackhole/kube-vms-playbook/playbooks
+extras=./extras
+
 
 terraform apply --auto-approve
 
@@ -17,21 +19,19 @@ cp inventory "$dir"
 cp kube "$kube_dir"
   
 
+# if [ $? -ne 0 ]
+# then
+#   echo "Error in ansible epel." >&2
+#   exit 1
+# fi
+
+# if [ $? -ne 0 ]
+# then
+#   echo "Error in ansible mosh" >&2
+#   exit 1
+# fi
+
 pushd $dir 
-
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible epel." >&2
-  exit 1
-fi
-
-
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible mosh" >&2
-  exit 1
-fi
-
 ansible-playbook -i inventory site.yml
 if [ $? -ne 0 ]
 then
@@ -40,23 +40,40 @@ then
 fi
 popd
 
-pushd $playbook 
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible epel." >&2
-  exit 1
-fi
+pushd $kube_playbook 
+# if [ $? -ne 0 ]
+# then
+#   echo "Error in ansible epel." >&2
+#   exit 1
+# fi
 
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible mosh." >&2
-  exit 1
-fi
+# if [ $? -ne 0 ]
+# then
+#   echo "Error in ansible mosh." >&2
+#   exit 1
+# fi
 
 ansible-playbook -i inventories/development/kube site.yml
+
 if [ $? -ne 0 ]
 then
   echo "Error in ansible k8s playbook." >&2
   exit 1
 fi
+
+popd
+
+cp inventory "$extras"
+cp kube "$extras"
+
+pushd $extras
+
+ansible-playbook  extra.yml
+
+if [ $? -ne 0 ]
+then
+  echo "Error in Extras." >&2
+  exit 1
+fi
+
 popd
