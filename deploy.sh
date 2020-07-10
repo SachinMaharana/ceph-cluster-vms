@@ -1,8 +1,11 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Unifies the all plays and provisioning of the ceph and kuberentes cluster creation
 
-set -e
+set -o errexit          
+set -o errtrace        
+set -o nounset         
+set -o pipefail  
 
 err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
@@ -11,6 +14,7 @@ err() {
 function main() {
   declare_variables
   run_terraform
+  copy_inventory_files
   run_ceph
   run_kubernetes
   run_extras
