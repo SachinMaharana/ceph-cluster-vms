@@ -531,3 +531,303 @@ deprecation_warnings=False in ansible.cfg.
 2020-07-08 23:04:38,309 p=22184 u=sachin n=ansible | master-0                   : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2020-07-08 23:04:38,309 p=22184 u=sachin n=ansible | worker-0                   : ok=8    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 2020-07-08 23:04:38,309 p=22184 u=sachin n=ansible | worker-1                   : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 19:55:20,531 p=8644 u=sachin n=ansible | [DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group 
+names by default, this will change, but still be user configurable on deprecation. This feature will be 
+removed in version 2.10. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2020-07-09 19:55:20,532 p=8644 u=sachin n=ansible | [WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+2020-07-09 19:55:20,738 p=8644 u=sachin n=ansible | PLAY [all] *************************************************************************************************
+2020-07-09 19:55:20,761 p=8644 u=sachin n=ansible | TASK [Install EPEL Repo] ***********************************************************************************
+2020-07-09 19:55:38,203 p=8644 u=sachin n=ansible | changed: [worker-0]
+2020-07-09 19:55:40,204 p=8644 u=sachin n=ansible | ok: [3.223.3.152]
+2020-07-09 19:55:40,564 p=8644 u=sachin n=ansible | ok: [35.172.146.42]
+2020-07-09 19:55:41,292 p=8644 u=sachin n=ansible | ok: [3.235.191.38]
+2020-07-09 19:55:41,898 p=8644 u=sachin n=ansible | changed: [worker-1]
+2020-07-09 19:55:58,077 p=8644 u=sachin n=ansible | ok: [34.204.199.195]
+2020-07-09 19:55:58,333 p=8644 u=sachin n=ansible | changed: [master-0]
+2020-07-09 19:56:01,711 p=8644 u=sachin n=ansible | ok: [3.226.242.53]
+2020-07-09 19:56:02,119 p=8644 u=sachin n=ansible | ok: [3.233.215.109]
+2020-07-09 19:56:02,122 p=8644 u=sachin n=ansible | TASK [mosh : Install Mosh] *********************************************************************************
+2020-07-09 19:56:29,842 p=8644 u=sachin n=ansible | changed: [35.172.146.42]
+2020-07-09 19:56:30,698 p=8644 u=sachin n=ansible | changed: [3.235.191.38]
+2020-07-09 19:56:34,187 p=8644 u=sachin n=ansible | changed: [3.223.3.152]
+2020-07-09 19:57:02,505 p=8644 u=sachin n=ansible | changed: [worker-0]
+2020-07-09 19:57:02,995 p=8644 u=sachin n=ansible | changed: [worker-1]
+2020-07-09 19:57:05,233 p=8644 u=sachin n=ansible | changed: [3.233.215.109]
+2020-07-09 19:57:06,788 p=8644 u=sachin n=ansible | changed: [34.204.199.195]
+2020-07-09 19:57:30,205 p=8644 u=sachin n=ansible | changed: [master-0]
+2020-07-09 19:57:37,711 p=8644 u=sachin n=ansible | changed: [3.226.242.53]
+2020-07-09 19:57:37,723 p=8644 u=sachin n=ansible | TASK [extras : Get Git Files] ******************************************************************************
+2020-07-09 19:57:37,787 p=8644 u=sachin n=ansible | skipping: [worker-0]
+2020-07-09 19:57:37,805 p=8644 u=sachin n=ansible | skipping: [worker-1]
+2020-07-09 19:57:37,827 p=8644 u=sachin n=ansible | skipping: [35.172.146.42]
+2020-07-09 19:57:37,838 p=8644 u=sachin n=ansible | skipping: [3.223.3.152]
+2020-07-09 19:57:37,844 p=8644 u=sachin n=ansible | skipping: [34.204.199.195]
+2020-07-09 19:57:37,845 p=8644 u=sachin n=ansible | skipping: [3.235.191.38]
+2020-07-09 19:57:37,857 p=8644 u=sachin n=ansible | skipping: [3.233.215.109]
+2020-07-09 19:57:37,861 p=8644 u=sachin n=ansible | skipping: [3.226.242.53]
+2020-07-09 19:57:48,919 p=8644 u=sachin n=ansible | changed: [master-0]
+2020-07-09 19:57:48,943 p=8644 u=sachin n=ansible | TASK [extras : get ceph status from the first monitor] *****************************************************
+2020-07-09 19:58:04,990 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=ceph mon dump)
+2020-07-09 19:58:15,715 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=ceph osd pool create kube 64 64)
+2020-07-09 19:58:24,600 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=ceph osd pool get kube all)
+2020-07-09 19:58:35,419 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=rbd pool init kube)
+2020-07-09 19:58:45,361 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube')
+2020-07-09 19:58:55,069 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => (item=ceph auth list)
+2020-07-09 19:58:55,095 p=8644 u=sachin n=ansible | TASK [extras : show ceph status for cluster ceph] **********************************************************
+2020-07-09 19:58:55,116 p=8644 u=sachin n=ansible | ok: [worker-0 -> 35.172.146.42] => {
+    "msg": [
+        "epoch 1", 
+        "fsid d7de7691-c568-4b20-885b-f6c91e16c12d", 
+        "last_changed 2020-07-09 14:08:25.951506", 
+        "created 2020-07-09 14:08:25.951506", 
+        "min_mon_release 14 (nautilus)", 
+        "0: [v2:172.31.23.115:3300/0,v1:172.31.23.115:6789/0] mon.ip-172-31-23-115", 
+        "1: [v2:172.31.29.24:3300/0,v1:172.31.29.24:6789/0] mon.ip-172-31-29-24", 
+        "2: [v2:172.31.29.234:3300/0,v1:172.31.29.234:6789/0] mon.ip-172-31-29-234"
+    ]
+}
+2020-07-09 19:58:55,125 p=8644 u=sachin n=ansible | TASK [extras : write status to master node] ****************************************************************
+2020-07-09 19:59:22,481 p=8644 u=sachin n=ansible | changed: [worker-0 -> 3.233.229.239]
+2020-07-09 19:59:22,486 p=8644 u=sachin n=ansible | TASK [extras : write auth to master node] ******************************************************************
+2020-07-09 19:59:45,064 p=8644 u=sachin n=ansible | changed: [worker-0 -> 3.233.229.239]
+2020-07-09 19:59:45,093 p=8644 u=sachin n=ansible | TASK [extras : get kubectl completions] ********************************************************************
+2020-07-09 19:59:53,963 p=8644 u=sachin n=ansible | changed: [worker-0 -> 3.233.229.239]
+2020-07-09 19:59:53,979 p=8644 u=sachin n=ansible | TASK [extras : Insert kubectl completions] *****************************************************************
+2020-07-09 20:00:04,384 p=8644 u=sachin n=ansible | changed: [worker-0 -> 3.233.229.239]
+2020-07-09 20:00:04,394 p=8644 u=sachin n=ansible | PLAY RECAP *************************************************************************************************
+2020-07-09 20:00:04,395 p=8644 u=sachin n=ansible | 3.223.3.152                : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,395 p=8644 u=sachin n=ansible | 3.226.242.53               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | 3.233.215.109              : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | 3.235.191.38               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | 34.204.199.195             : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | 35.172.146.42              : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | master-0                   : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | worker-0                   : ok=8    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-09 20:00:04,396 p=8644 u=sachin n=ansible | worker-1                   : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:04:55,261 p=24833 u=sachin n=ansible | [DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group 
+names by default, this will change, but still be user configurable on deprecation. This feature will be 
+removed in version 2.10. Deprecation warnings can be disabled by setting deprecation_warnings=False in 
+ansible.cfg.
+2020-07-10 00:04:55,261 p=24833 u=sachin n=ansible | [WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+2020-07-10 00:04:55,563 p=24833 u=sachin n=ansible | PLAY [all] *************************************************************************************************
+2020-07-10 00:04:55,575 p=24833 u=sachin n=ansible | TASK [Install EPEL Repo] ***********************************************************************************
+2020-07-10 00:05:14,861 p=24833 u=sachin n=ansible | changed: [worker-1]
+2020-07-10 00:05:15,782 p=24833 u=sachin n=ansible | changed: [worker-0]
+2020-07-10 00:05:17,829 p=24833 u=sachin n=ansible | changed: [worker-2]
+2020-07-10 00:05:18,750 p=24833 u=sachin n=ansible | ok: [34.239.248.161]
+2020-07-10 00:05:25,813 p=24833 u=sachin n=ansible | ok: [54.165.17.39]
+2020-07-10 00:05:40,050 p=24833 u=sachin n=ansible | ok: [100.26.159.129]
+2020-07-10 00:05:41,377 p=24833 u=sachin n=ansible | ok: [35.174.211.226]
+2020-07-10 00:05:41,936 p=24833 u=sachin n=ansible | changed: [master-0]
+2020-07-10 00:05:43,395 p=24833 u=sachin n=ansible | ok: [52.87.254.146]
+2020-07-10 00:05:43,401 p=24833 u=sachin n=ansible | TASK [mosh : Install Mosh] *********************************************************************************
+2020-07-10 00:06:09,842 p=24833 u=sachin n=ansible | changed: [34.239.248.161]
+2020-07-10 00:06:09,850 p=24833 u=sachin n=ansible | changed: [54.165.17.39]
+2020-07-10 00:06:31,356 p=24833 u=sachin n=ansible | changed: [35.174.211.226]
+2020-07-10 00:06:31,363 p=24833 u=sachin n=ansible | changed: [100.26.159.129]
+2020-07-10 00:06:41,171 p=24833 u=sachin n=ansible | changed: [worker-1]
+2020-07-10 00:06:41,995 p=24833 u=sachin n=ansible | changed: [worker-0]
+2020-07-10 00:06:42,609 p=24833 u=sachin n=ansible | changed: [worker-2]
+2020-07-10 00:06:55,069 p=24833 u=sachin n=ansible | changed: [52.87.254.146]
+2020-07-10 00:07:35,618 p=24833 u=sachin n=ansible | changed: [master-0]
+2020-07-10 00:07:35,631 p=24833 u=sachin n=ansible | TASK [extras : Get Git Files] ******************************************************************************
+2020-07-10 00:07:35,679 p=24833 u=sachin n=ansible | skipping: [worker-0]
+2020-07-10 00:07:35,688 p=24833 u=sachin n=ansible | skipping: [worker-1]
+2020-07-10 00:07:35,698 p=24833 u=sachin n=ansible | skipping: [worker-2]
+2020-07-10 00:07:35,708 p=24833 u=sachin n=ansible | skipping: [54.165.17.39]
+2020-07-10 00:07:35,710 p=24833 u=sachin n=ansible | skipping: [34.239.248.161]
+2020-07-10 00:07:35,711 p=24833 u=sachin n=ansible | skipping: [100.26.159.129]
+2020-07-10 00:07:35,716 p=24833 u=sachin n=ansible | skipping: [35.174.211.226]
+2020-07-10 00:07:35,735 p=24833 u=sachin n=ansible | skipping: [52.87.254.146]
+2020-07-10 00:07:47,630 p=24833 u=sachin n=ansible | changed: [master-0]
+2020-07-10 00:07:47,682 p=24833 u=sachin n=ansible | TASK [extras : get ceph status from the first monitor] *****************************************************
+2020-07-10 00:08:04,126 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=ceph mon dump)
+2020-07-10 00:08:14,719 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=ceph osd pool create kube 64 64)
+2020-07-10 00:08:25,626 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=ceph osd pool get kube all)
+2020-07-10 00:08:39,533 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=rbd pool init kube)
+2020-07-10 00:08:49,776 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube')
+2020-07-10 00:08:59,976 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => (item=ceph auth list)
+2020-07-10 00:09:00,002 p=24833 u=sachin n=ansible | TASK [extras : show ceph status for cluster ceph] **********************************************************
+2020-07-10 00:09:00,025 p=24833 u=sachin n=ansible | ok: [worker-0 -> 54.165.17.39] => {
+    "msg": [
+        "epoch 1", 
+        "fsid 6b52ea28-3d96-4a5e-a2b1-db2b7b57526b", 
+        "last_changed 2020-07-09 18:16:08.014634", 
+        "created 2020-07-09 18:16:08.014634", 
+        "min_mon_release 14 (nautilus)", 
+        "0: [v2:172.31.18.114:3300/0,v1:172.31.18.114:6789/0] mon.ip-172-31-18-114", 
+        "1: [v2:172.31.25.51:3300/0,v1:172.31.25.51:6789/0] mon.ip-172-31-25-51"
+    ]
+}
+2020-07-10 00:09:00,038 p=24833 u=sachin n=ansible | TASK [extras : write status to master node] ****************************************************************
+2020-07-10 00:09:34,821 p=24833 u=sachin n=ansible | changed: [worker-0 -> 35.153.57.140]
+2020-07-10 00:09:34,844 p=24833 u=sachin n=ansible | TASK [extras : write auth to master node] ******************************************************************
+2020-07-10 00:10:04,129 p=24833 u=sachin n=ansible | changed: [worker-0 -> 35.153.57.140]
+2020-07-10 00:10:04,154 p=24833 u=sachin n=ansible | TASK [extras : get kubectl completions] ********************************************************************
+2020-07-10 00:10:17,765 p=24833 u=sachin n=ansible | changed: [worker-0 -> 35.153.57.140]
+2020-07-10 00:10:17,776 p=24833 u=sachin n=ansible | TASK [extras : Insert kubectl completions] *****************************************************************
+2020-07-10 00:10:29,317 p=24833 u=sachin n=ansible | changed: [worker-0 -> 35.153.57.140]
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | PLAY RECAP *************************************************************************************************
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | 100.26.159.129             : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | 34.239.248.161             : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | 35.174.211.226             : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | 52.87.254.146              : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,321 p=24833 u=sachin n=ansible | 54.165.17.39               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,322 p=24833 u=sachin n=ansible | master-0                   : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2020-07-10 00:10:29,322 p=24833 u=sachin n=ansible | worker-0                   : ok=8    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,322 p=24833 u=sachin n=ansible | worker-1                   : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 00:10:29,322 p=24833 u=sachin n=ansible | worker-2                   : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:48:56,359 p=4320 u=sachin n=ansible | [DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in 
+group names by default, this will change, but still be user configurable on deprecation. This feature
+ will be removed in version 2.10. Deprecation warnings can be disabled by setting 
+deprecation_warnings=False in ansible.cfg.
+2020-07-10 11:48:56,360 p=4320 u=sachin n=ansible | [WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+2020-07-10 11:48:56,704 p=4320 u=sachin n=ansible | PLAY [all] *******************************************************************************************
+2020-07-10 11:48:56,714 p=4320 u=sachin n=ansible | TASK [Install EPEL Repo] *****************************************************************************
+2020-07-10 11:49:14,935 p=4320 u=sachin n=ansible | changed: [worker-0]
+2020-07-10 11:49:16,163 p=4320 u=sachin n=ansible | ok: [54.221.171.218]
+2020-07-10 11:49:16,520 p=4320 u=sachin n=ansible | ok: [3.80.243.176]
+2020-07-10 11:49:17,286 p=4320 u=sachin n=ansible | ok: [54.162.70.183]
+2020-07-10 11:49:19,658 p=4320 u=sachin n=ansible | changed: [worker-1]
+2020-07-10 11:49:34,378 p=4320 u=sachin n=ansible | ok: [18.234.90.41]
+2020-07-10 11:49:35,335 p=4320 u=sachin n=ansible | ok: [54.164.99.59]
+2020-07-10 11:49:38,521 p=4320 u=sachin n=ansible | changed: [master-0]
+2020-07-10 11:49:38,524 p=4320 u=sachin n=ansible | TASK [mosh : Install Mosh] ***************************************************************************
+2020-07-10 11:50:01,784 p=4320 u=sachin n=ansible | changed: [54.162.70.183]
+2020-07-10 11:50:01,809 p=4320 u=sachin n=ansible | changed: [3.80.243.176]
+2020-07-10 11:50:02,149 p=4320 u=sachin n=ansible | changed: [54.221.171.218]
+2020-07-10 11:50:24,358 p=4320 u=sachin n=ansible | changed: [18.234.90.41]
+2020-07-10 11:50:24,765 p=4320 u=sachin n=ansible | changed: [54.164.99.59]
+2020-07-10 11:50:35,209 p=4320 u=sachin n=ansible | changed: [worker-1]
+2020-07-10 11:50:35,554 p=4320 u=sachin n=ansible | changed: [worker-0]
+2020-07-10 11:50:58,358 p=4320 u=sachin n=ansible | changed: [master-0]
+2020-07-10 11:50:58,370 p=4320 u=sachin n=ansible | TASK [extras : Get Git Files] ************************************************************************
+2020-07-10 11:50:58,416 p=4320 u=sachin n=ansible | skipping: [worker-0]
+2020-07-10 11:50:58,436 p=4320 u=sachin n=ansible | skipping: [worker-1]
+2020-07-10 11:50:58,446 p=4320 u=sachin n=ansible | skipping: [54.162.70.183]
+2020-07-10 11:50:58,447 p=4320 u=sachin n=ansible | skipping: [3.80.243.176]
+2020-07-10 11:50:58,447 p=4320 u=sachin n=ansible | skipping: [54.221.171.218]
+2020-07-10 11:50:58,454 p=4320 u=sachin n=ansible | skipping: [18.234.90.41]
+2020-07-10 11:50:58,465 p=4320 u=sachin n=ansible | skipping: [54.164.99.59]
+2020-07-10 11:51:07,785 p=4320 u=sachin n=ansible | changed: [master-0]
+2020-07-10 11:51:07,814 p=4320 u=sachin n=ansible | TASK [extras : get ceph status from the first monitor] ***********************************************
+2020-07-10 11:51:22,929 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph mon dump)
+2020-07-10 11:51:32,938 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph osd pool create kube 64 64)
+2020-07-10 11:51:41,822 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph osd pool get kube all)
+2020-07-10 11:51:52,763 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=rbd pool init kube)
+2020-07-10 11:52:03,304 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube')
+2020-07-10 11:52:14,345 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph auth list)
+2020-07-10 11:52:14,375 p=4320 u=sachin n=ansible | TASK [extras : show ceph status for cluster ceph] ****************************************************
+2020-07-10 11:52:14,392 p=4320 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => {
+    "msg": [
+        "epoch 1", 
+        "fsid 3a80cab9-ee51-4c94-b21e-5c1eab2ea588", 
+        "last_changed 2020-07-10 05:57:16.080276", 
+        "created 2020-07-10 05:57:16.080276", 
+        "min_mon_release 14 (nautilus)", 
+        "0: [v2:172.31.21.253:3300/0,v1:172.31.21.253:6789/0] mon.ip-172-31-21-253", 
+        "1: [v2:172.31.28.165:3300/0,v1:172.31.28.165:6789/0] mon.ip-172-31-28-165"
+    ]
+}
+2020-07-10 11:52:14,397 p=4320 u=sachin n=ansible | TASK [extras : write status to master node] **********************************************************
+2020-07-10 11:52:39,220 p=4320 u=sachin n=ansible | changed: [worker-0 -> 34.235.148.108]
+2020-07-10 11:52:39,244 p=4320 u=sachin n=ansible | TASK [extras : write auth to master node] ************************************************************
+2020-07-10 11:53:00,553 p=4320 u=sachin n=ansible | changed: [worker-0 -> 34.235.148.108]
+2020-07-10 11:53:00,577 p=4320 u=sachin n=ansible | TASK [extras : get kubectl completions] **************************************************************
+2020-07-10 11:53:10,795 p=4320 u=sachin n=ansible | changed: [worker-0 -> 34.235.148.108]
+2020-07-10 11:53:10,802 p=4320 u=sachin n=ansible | TASK [extras : Insert kubectl completions] ***********************************************************
+2020-07-10 11:53:19,521 p=4320 u=sachin n=ansible | changed: [worker-0 -> 34.235.148.108]
+2020-07-10 11:53:19,529 p=4320 u=sachin n=ansible | PLAY RECAP *******************************************************************************************
+2020-07-10 11:53:19,529 p=4320 u=sachin n=ansible | 18.234.90.41               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,530 p=4320 u=sachin n=ansible | 3.80.243.176               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,530 p=4320 u=sachin n=ansible | 54.162.70.183              : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,530 p=4320 u=sachin n=ansible | 54.164.99.59               : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,531 p=4320 u=sachin n=ansible | 54.221.171.218             : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,531 p=4320 u=sachin n=ansible | master-0                   : ok=3    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2020-07-10 11:53:19,531 p=4320 u=sachin n=ansible | worker-0                   : ok=8    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 11:53:19,532 p=4320 u=sachin n=ansible | worker-1                   : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:17:02,369 p=14972 u=sachin n=ansible | ERROR! the playbook: site.yml could not be found
+2020-07-10 12:17:11,587 p=15460 u=sachin n=ansible | [WARNING]: Unable to parse /home/sachin/blackhole/ceph-cluster-vms/extras/inventories/development/kube as an inventory source
+
+2020-07-10 12:17:11,587 p=15460 u=sachin n=ansible | [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2020-07-10 12:17:11,588 p=15460 u=sachin n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+
+2020-07-10 12:17:11,852 p=15460 u=sachin n=ansible | PLAY [all] ***************************************************************************************************************************************************
+2020-07-10 12:17:11,852 p=15460 u=sachin n=ansible | skipping: no hosts matched
+2020-07-10 12:17:11,853 p=15460 u=sachin n=ansible | PLAY RECAP ***************************************************************************************************************************************************
+2020-07-10 12:18:35,898 p=18091 u=sachin n=ansible | [DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default, this will change, but still be 
+user configurable on deprecation. This feature will be removed in version 2.10. Deprecation warnings can be disabled by setting deprecation_warnings=False in
+ ansible.cfg.
+2020-07-10 12:18:35,898 p=18091 u=sachin n=ansible | [WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+
+2020-07-10 12:18:36,265 p=18091 u=sachin n=ansible | PLAY [all] ***************************************************************************************************************************************************
+2020-07-10 12:18:36,273 p=18091 u=sachin n=ansible | TASK [Install EPEL Repo] *************************************************************************************************************************************
+2020-07-10 12:18:56,169 p=18091 u=sachin n=ansible | ok: [3.80.243.176]
+2020-07-10 12:18:56,383 p=18091 u=sachin n=ansible | ok: [54.164.99.59]
+2020-07-10 12:18:56,400 p=18091 u=sachin n=ansible | ok: [master-0]
+2020-07-10 12:18:56,478 p=18091 u=sachin n=ansible | ok: [worker-1]
+2020-07-10 12:18:56,479 p=18091 u=sachin n=ansible | ok: [18.234.90.41]
+2020-07-10 12:18:58,554 p=18091 u=sachin n=ansible | ok: [54.162.70.183]
+2020-07-10 12:18:59,668 p=18091 u=sachin n=ansible | ok: [worker-0]
+2020-07-10 12:19:00,020 p=18091 u=sachin n=ansible | ok: [54.221.171.218]
+2020-07-10 12:19:00,035 p=18091 u=sachin n=ansible | TASK [mosh : Install Mosh] ***********************************************************************************************************************************
+2020-07-10 12:19:18,505 p=18091 u=sachin n=ansible | ok: [worker-0]
+2020-07-10 12:19:18,508 p=18091 u=sachin n=ansible | ok: [18.234.90.41]
+2020-07-10 12:19:18,510 p=18091 u=sachin n=ansible | ok: [master-0]
+2020-07-10 12:19:19,143 p=18091 u=sachin n=ansible | ok: [worker-1]
+2020-07-10 12:19:19,145 p=18091 u=sachin n=ansible | ok: [54.164.99.59]
+2020-07-10 12:19:19,798 p=18091 u=sachin n=ansible | ok: [54.162.70.183]
+2020-07-10 12:19:21,243 p=18091 u=sachin n=ansible | ok: [3.80.243.176]
+2020-07-10 12:19:22,785 p=18091 u=sachin n=ansible | ok: [54.221.171.218]
+2020-07-10 12:19:22,798 p=18091 u=sachin n=ansible | TASK [extras : Get Git Files] ********************************************************************************************************************************
+2020-07-10 12:19:22,858 p=18091 u=sachin n=ansible | skipping: [worker-0]
+2020-07-10 12:19:22,874 p=18091 u=sachin n=ansible | skipping: [worker-1]
+2020-07-10 12:19:22,892 p=18091 u=sachin n=ansible | skipping: [54.162.70.183]
+2020-07-10 12:19:22,893 p=18091 u=sachin n=ansible | skipping: [3.80.243.176]
+2020-07-10 12:19:22,897 p=18091 u=sachin n=ansible | skipping: [54.221.171.218]
+2020-07-10 12:19:22,899 p=18091 u=sachin n=ansible | skipping: [18.234.90.41]
+2020-07-10 12:19:22,915 p=18091 u=sachin n=ansible | skipping: [54.164.99.59]
+2020-07-10 12:19:31,082 p=18091 u=sachin n=ansible | fatal: [master-0]: FAILED! => {"before": "025039eafc40e94df735d520d97dffd2da051e4d", "changed": false, "msg": "Local modifications exist in repository (force=no)."}
+2020-07-10 12:19:31,129 p=18091 u=sachin n=ansible | TASK [extras : get ceph status from the first monitor] *******************************************************************************************************
+2020-07-10 12:19:42,174 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph mon dump)
+2020-07-10 12:19:51,250 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph osd pool create kube 64 64)
+2020-07-10 12:19:59,987 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph osd pool get kube all)
+2020-07-10 12:20:10,322 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=rbd pool init kube)
+2020-07-10 12:20:19,188 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube')
+2020-07-10 12:20:27,616 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => (item=ceph auth list)
+2020-07-10 12:20:27,649 p=18091 u=sachin n=ansible | TASK [extras : show ceph status for cluster ceph] ************************************************************************************************************
+2020-07-10 12:20:27,670 p=18091 u=sachin n=ansible | ok: [worker-0 -> 54.162.70.183] => {
+    "msg": [
+        "epoch 1", 
+        "fsid 3a80cab9-ee51-4c94-b21e-5c1eab2ea588", 
+        "last_changed 2020-07-10 05:57:16.080276", 
+        "created 2020-07-10 05:57:16.080276", 
+        "min_mon_release 14 (nautilus)", 
+        "0: [v2:172.31.21.253:3300/0,v1:172.31.21.253:6789/0] mon.ip-172-31-21-253", 
+        "1: [v2:172.31.28.165:3300/0,v1:172.31.28.165:6789/0] mon.ip-172-31-28-165"
+    ]
+}
+2020-07-10 12:20:27,679 p=18091 u=sachin n=ansible | TASK [extras : write status to master node] ******************************************************************************************************************
+2020-07-10 12:20:42,045 p=18091 u=sachin n=ansible | ok: [worker-0 -> 34.235.148.108]
+2020-07-10 12:20:42,068 p=18091 u=sachin n=ansible | TASK [extras : write auth to master node] ********************************************************************************************************************
+2020-07-10 12:20:56,673 p=18091 u=sachin n=ansible | ok: [worker-0 -> 34.235.148.108]
+2020-07-10 12:20:56,688 p=18091 u=sachin n=ansible | TASK [extras : get kubectl completions] **********************************************************************************************************************
+2020-07-10 12:21:05,376 p=18091 u=sachin n=ansible | ok: [worker-0 -> 34.235.148.108]
+2020-07-10 12:21:05,398 p=18091 u=sachin n=ansible | TASK [extras : Insert kubectl completions] *******************************************************************************************************************
+2020-07-10 12:21:13,435 p=18091 u=sachin n=ansible | ok: [worker-0 -> 34.235.148.108]
+2020-07-10 12:21:13,460 p=18091 u=sachin n=ansible | TASK [extras : Copy binary] **********************************************************************************************************************************
+2020-07-10 12:21:59,657 p=18091 u=sachin n=ansible | changed: [worker-0 -> 34.235.148.108]
+2020-07-10 12:21:59,661 p=18091 u=sachin n=ansible | PLAY RECAP ***************************************************************************************************************************************************
+2020-07-10 12:21:59,661 p=18091 u=sachin n=ansible | 18.234.90.41               : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,661 p=18091 u=sachin n=ansible | 3.80.243.176               : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | 54.162.70.183              : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | 54.164.99.59               : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | 54.221.171.218             : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | master-0                   : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | worker-0                   : ok=9    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2020-07-10 12:21:59,662 p=18091 u=sachin n=ansible | worker-1                   : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   

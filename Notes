@@ -1,0 +1,11 @@
+kubectl api-resources | grep -E "^Name|csi|storage|PersistentVolume"
+
+
+for pod in `kubectl -n csi get pods|grep rbdplugin|grep -v provisioner|awk '{print $1}'`                                                                                                                          
+do
+echo $pod
+kubectl exec -it -n csi $pod -c  csi-rbdplugin rbd -- device list
+done
+
+$ echo "172.31.28.165,172.31.21.253 name=kubeuser,secret=AQAKCQhfONwhFhAAZ1ZzMwrTT7F+Y2YjF8Lt3g== rbd kube" > /sys/bus/rbd/add
+

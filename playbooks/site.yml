@@ -1,0 +1,31 @@
+---
+- hosts: all
+  name: Install all dependencies in all host
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - import_role:
+        name: common
+
+- hosts: masters
+  gather_facts: false
+  any_errors_fatal: true
+  name: configuring master
+  become: yes
+
+  tasks:
+    - import_role:
+        name: install-master-dependencies
+    - import_role:
+        name: provision-master
+
+- hosts: workers
+  gather_facts: false
+  any_errors_fatal: true
+  name: configuring wokers
+  become: yes
+
+  tasks:
+    - import_role:
+        name: provision-worker

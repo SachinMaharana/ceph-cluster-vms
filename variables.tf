@@ -23,7 +23,7 @@ variable "device_name" {
 
 
 variable "mon_count" {
-  default = 3
+  default = 2
 }
 
 variable "osd_count" {

@@ -1,0 +1,8 @@
+---
+# tasks file for install-master-dependencies
+
+- name: install kubectl
+  yum:
+    name: kubectl-1.16.2
+    state: present
+    allow_downgrade: yes

@@ -1,56 +1,71 @@
 #!/bin/bash
 
-dir=../ceph-ansible-custom/ceph-ansible 
-kube_dir=~/blackhole/kube-vms-playbook/playbooks/inventories/development/
-kube_playbook=~/blackhole/kube-vms-playbook/playbooks
-extras=./extras
+# Unifies the all plays and provisioning of the ceph and kuberentes cluster creation
+
+set -e
+
+err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+}
+
+function main() {
+  declare_variables
+  run_terraform
+  run_ceph
+  run_kubernetes
+  run_extras
+}
+
+function declare_variables() {
+  ceph_dir=./ceph-ansible-custom/ceph-ansible
+  kube_dir=./playbooks
+  kube_host=./playbooks/inventories/development/
+  extras=./extras
+}
 
 
-#terraform apply --auto-approve
+function run_terraform() {
+  if ! terraform apply --auto-approve; then
+    err "Error in Terraform Operation. Exiting...."
+    exit 1
+  fi
+}
 
 
-if [ $? -ne 0 ]
-then
-  echo "Error in Terraform." >&2
-  exit 1
-fi
+function copy_inventory_files() {
+  cp inventory "${ceph_dir}"
+  cp kube "${kube_host}"
+  cp inventory kube "${extras}"
+}
 
-cp inventory "$dir"
-cp kube "$kube_dir"
-  
+function run_ceph() {
+  pushd $ceph_dir || exit 1
+  if ! ansible-playbook -i inventory site.yml; then
+    err "Error in ansible ceph playbook.Exiting.."
+    exit 1
+  fi
+  popd || exit 1
+}
 
-pushd $dir 
-#ansible-playbook -i inventory site.yml
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible playbook." >&2
-  exit 1
-fi
-popd
 
-pushd $kube_playbook 
+function run_kubernetes () {
+  pushd $kube_dir || exit 1
+  if ! ansible-playbook -i inventories/development/kube site.yml; then
+    err "Error in ansible k8s playbook. Exiting.."
+    exit 1
+  fi
+  popd || exit 1
+}
 
-ansible-playbook -i inventories/development/kube site.yml
+function run_extras() {
+  pushd $extras || exit 1
+  if ! ansible-playbook  extra.yml; then
+    err "Error in Extras. Exiting.."
+    exit 1
+  fi
+  popd || exit 1
+}
 
-if [ $? -ne 0 ]
-then
-  echo "Error in ansible k8s playbook." >&2
-  exit 1
-fi
 
-popd
+main "$@"
 
-cp inventory "$extras"
-cp kube "$extras"
-
-pushd $extras
-
-ansible-playbook  extra.yml
-
-if [ $? -ne 0 ]
-then
-  echo "Error in Extras." >&2
-  exit 1
-fi
-
-popd

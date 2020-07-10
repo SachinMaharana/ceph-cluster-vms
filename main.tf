@@ -187,7 +187,8 @@ resource "aws_instance" "osd" {
 }
 
 resource "aws_instance" "k8s" {
-  count                       = var.create_k8s == null ? 0 : 3
+  # count                       = var.create_k8s == null ? 0 : 3
+  count                       = 4
   ami                         = var.centos
   instance_type               = var.k8s_instance_type
   vpc_security_group_ids      = [aws_security_group.ceph.id]
@@ -261,7 +262,7 @@ resource "local_file" "kube_inventory" {
   count = var.create_k8s == null ? 0 : 1
   content = templatefile("${path.module}/templates/kube.tpl", {
     list_master = slice(aws_instance.k8s.*.public_ip, 0, 1),
-    list_worker = slice(aws_instance.k8s.*.public_ip, 1, 3)
+    list_worker = slice(aws_instance.k8s.*.public_ip, 1, 4)
   })
   filename = var.kube_file
 }

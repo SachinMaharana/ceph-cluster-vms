@@ -59,3 +59,12 @@
   become: False
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
+
+- name: Copy binary
+  copy:
+    src: k9s
+    dest: ~/
+  become: False
+  delegate_to: "{{ groups.masters[0] }}"
+  run_once: true
+

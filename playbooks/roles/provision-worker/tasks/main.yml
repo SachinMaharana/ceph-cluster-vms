@@ -1,0 +1,8 @@
+---
+# tasks file for provision-worker
+
+- name: join cluster
+  shell: "{{ hostvars['master-0'].join_command }} --ignore-preflight-errors all  >> node_joined.txt"
+  args:
+    chdir: $HOME
+    creates: node_joined.txt
