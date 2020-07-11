@@ -1,7 +1,0 @@
-[masters]
-master-0 ansible_host=18.218.8.193 ansible_user=centos
-
-[workers]
-worker-0 ansible_host=18.216.206.4 ansible_user=centos
-worker-1 ansible_host=3.133.84.136 ansible_user=centos
-

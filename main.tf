@@ -79,8 +79,8 @@ resource "aws_security_group_rule" "allow_mosh_2" {
 }
 resource "aws_security_group_rule" "allow_ssh" {
   type              = "ingress"
-  from_port         = 60000
-  to_port           = 60000
+  from_port         = 60002
+  to_port           = 60002
   protocol          = "udp"
   security_group_id = aws_security_group.ceph.id
   cidr_blocks       = [local.workstation-external-cidr]

@@ -21,10 +21,10 @@ function main() {
 }
 
 function declare_variables() {
-  ceph_dir=./ceph-ansible-custom/ceph-ansible
-  kube_dir=./playbooks
-  kube_host=./playbooks/inventories/development/
-  extras=./extras
+  readonly ceph_dir=./ceph-ansible-custom/ceph-ansible
+  readonly kube_dir=./playbooks
+  readonly kube_host=./playbooks/inventories/development/
+  readonly extras=./extras
 }
 
 
@@ -63,7 +63,7 @@ function run_kubernetes () {
 
 function run_extras() {
   pushd $extras || exit 1
-  if ! ansible-playbook  extra.yml; then
+  if ! ansible-playbook extra.yml; then
     err "Error in Extras. Exiting.."
     exit 1
   fi
@@ -72,4 +72,3 @@ function run_extras() {
 
 
 main "$@"
-
