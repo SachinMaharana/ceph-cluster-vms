@@ -9,3 +9,33 @@ done
 
 $ echo "172.31.28.165,172.31.21.253 name=kubeuser,secret=AQAKCQhfONwhFhAAZ1ZzMwrTT7F+Y2YjF8Lt3g== rbd kube" > /sys/bus/rbd/add
 
+
+ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only
+
+
+ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get /coreos.com/network/subnets/10.244.1.1
+
+
+
+
+https://medium.com/@anilkreddyr/kubernetes-with-flannel-understanding-the-networking-part-2-78b53e5364c7
+
+
+https://dzone.com/articles/racy-conntrack-and-dns-lookup-timeouts
+
+https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture
+
+https://cloudnativelabs.github.io/post/2017-05-10-kube-network-service-proxy/
+
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html-single/security_guide/index#sect-Security_Guide-Firewalls-Using_IPTables
+
+https://www.digitalocean.com/community/tutorials/how-to-inspect-kubernetes-networking
+
+https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/
+
+
+curl -s https://api.github.com/repos/goharbor/harbor/releases/latest \
+| grep "offline-installer-v2.0.1.tgz" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -

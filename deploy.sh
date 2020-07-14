@@ -44,7 +44,7 @@ function copy_inventory_files() {
 
 function run_ceph() {
   pushd $ceph_dir || exit 1
-  if ! ansible-playbook -i inventory site.yml; then
+  if ! ansible-playbook -i inventory site.yml --fork 30; then
     err "Error in ansible ceph playbook.Exiting.."
     exit 1
   fi
@@ -54,7 +54,7 @@ function run_ceph() {
 
 function run_kubernetes () {
   pushd $kube_dir || exit 1
-  if ! ansible-playbook -i inventories/development/kube site.yml; then
+  if ! ansible-playbook -i inventories/development/kube site.yml --fork 30; then
     err "Error in ansible k8s playbook. Exiting.."
     exit 1
   fi
@@ -63,7 +63,7 @@ function run_kubernetes () {
 
 function run_extras() {
   pushd $extras || exit 1
-  if ! ansible-playbook extra.yml; then
+  if ! ansible-playbook extra.yml --fork 30; then
     err "Error in Extras. Exiting.."
     exit 1
   fi

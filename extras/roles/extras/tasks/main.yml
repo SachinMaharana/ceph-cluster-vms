@@ -5,7 +5,22 @@
   become: False
   git:
     repo: https://github.com/SachinMaharana/ceph-ansible-custom.git
-    dest: ~/ceph-csi
+    dest: ~/deploy
+  when: inventory_hostname == "master-0"
+
+# - name: mkdir repo
+#   become: False
+#   command: "{{ item }}"
+#   with_items:
+#     - mkdir -p ~/csi
+#   when: inventory_hostname == "master-0"
+
+- name: Copy repo
+  become: False
+  copy:
+    src: ~/deploy/ceph-csi/
+    dest: ~/csi
+    remote_src: true
   when: inventory_hostname == "master-0"
 
 - name: get ceph status from the first monitor
@@ -20,7 +35,7 @@
     - ceph osd pool get kube all
     - rbd pool init kube
     - ceph --cluster ceph auth get-or-create client.kubeuser mon 'allow r' osd 'allow rwx pool=kube'
-    - ceph auth list
+    - ceph auth get-or-create client.kubeuser
 
 - name: "show ceph status for cluster ceph"
   debug:
@@ -39,7 +54,7 @@
 - name: write auth to master node
   copy:
     content: "{{ ceph_status.results[5].stdout_lines }}"
-    dest: ~/ceph_auth
+    dest: ~/auth
   become: False
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
@@ -63,8 +78,7 @@
 - name: Copy binary
   copy:
     src: k9s
-    dest: ~/
-  become: False
+    dest: /usr/local/bin
+    mode: a+x
   delegate_to: "{{ groups.masters[0] }}"
   run_once: true
-
